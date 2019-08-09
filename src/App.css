@@ -13,6 +13,7 @@
   margin-bottom: 20px;
 }
 
+/* FORM */
 .search-box {
   border: 2px dashed rgb(153, 82, 82);
   border-radius: 4px;
@@ -29,7 +30,7 @@
 }
 
 .label-search-box {
-  font-size: calc(25px + 2vmin);
+  font-size: 35px;
   color: white;
   margin-right: 15px;
 }
@@ -104,7 +105,50 @@
   background-color: #ddd;
 }
 
+/* COUNTRY INFO */
+
+.country-info {
+  padding-top: 80px;
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+
 .country-flag {
   width: 200px;
   height: 80px;
+}
+
+/* Media Query Mixins */
+
+/* mediaXSm */
+@media screen and (max-width: 500px) {
+}
+
+/* mediaSm */
+@media screen and (max-width: 700px) {
+  .label-search-box {
+    margin-bottom: 15px;
+  }
+  .search-box {
+    flex-direction: column;
+  }
+  .button-search-box {
+    width: 150px;
+    margin: 0 auto;
+    padding: 6px;
+    margin-top: 15px;
+  }
+}
+
+/* mediaMd */
+@media screen and (min-width: 701px) and (max-width: 900px) {
+}
+
+/* mediaLg */
+@media screen and (min-width: 901px) and (max-width: 1200px) {
+}
+
+/* mediaXl */
+@media screen and (min-width: 1201px) {
 }

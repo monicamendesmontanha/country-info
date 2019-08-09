@@ -89,7 +89,7 @@ class App extends React.Component {
 
 
         {this.state.selectedCountry && this.state.countryVisible ? (
-          <div>
+          <div className="country-info">
             <div><img src={this.state.selectedCountry.flag} alt="" className="country-flag"/></div>
             <div>Country Name: {this.state.selectedCountry.name}</div>
             <div>Currency Name: {this.state.selectedCountry.currencies.map(currency => <span>{currency.name}</span>)}</div>
