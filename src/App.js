@@ -6,7 +6,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       selectedCountry: "",
-      countryNames: []
+      countries: []
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -22,11 +22,9 @@ class App extends React.Component {
 
       fetch(`https://restcountries.eu/rest/v2/name/${selectedCountry}`)
         .then(response => response.json())
-        .then(countries => {
-          const countryNames = countries.map(country => country.name);
-          self.setState({ countryNames });
+        .then(countries => { self.setState({ countries });
         })
-        .catch(error => this.setState({ countryNames: [] }))
+        .catch(() => self.setState({ countries: [] }))
     }
   }
 
@@ -59,8 +57,7 @@ class App extends React.Component {
           >Search
           </button>
         </form>
-
-        <div>{this.state.countryNames}</div>
+        <ul>{this.state.countries.map(country => (<li key={country.name}>{country.name}</li>))}</ul>
       </div>
     );
   }
