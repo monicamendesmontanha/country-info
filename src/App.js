@@ -25,7 +25,8 @@ class App extends React.Component {
         .then(countries => {
           const countryNames = countries.map(country => country.name);
           self.setState({ countryNames });
-        });
+        })
+        .catch(error => this.setState({ countryNames: [] }))
     }
   }
 
@@ -40,10 +41,11 @@ class App extends React.Component {
         <header className="header">
           <h1>Country Information</h1>
         </header>
-        <form className="search-box" onSubmit={this.handleSearch}>
+        <form className="search-box" onSubmit={this.handleSearch} autoComplete="off">
           <label className="label-search-box">Country name:</label>
           <input
             autoFocus
+            autoComplete="false"
             type="text"
             className="input-search-box"
             name="countryName"
