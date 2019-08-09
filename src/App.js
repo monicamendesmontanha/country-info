@@ -5,8 +5,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "",
-      searching: false,
+      selectedCountry: "",
       countryNames: []
     };
 
@@ -16,7 +15,7 @@ class App extends React.Component {
 
   handleInputChange(event) {
     const countryName = event.target.value;
-    this.setState({ value: countryName });
+    this.setState({ selectedCountry: countryName });
 
     if (countryName.length >= 3) {
       const self = this;
@@ -30,22 +29,9 @@ class App extends React.Component {
     }
   }
 
-  searchingCountry(value) {
-    return new Promise(resolve => {
-      let value = this.state.value;
-
-      setTimeout(() => {
-        return resolve(value);
-      }, Math.random() * 1000 + 500);
-    });
-  }
-
   async handleSearch(event) {
-    this.setState({ searching: true });
     event.preventDefault();
-    const response = await this.searchingCountry(this.state.value);
-    this.setState({ response });
-    this.setState({ submitting: false, result: this.state.value });
+    this.setState({ result: this.state.selectedCountry });
   }
 
   render() {
@@ -62,15 +48,13 @@ class App extends React.Component {
             className="input-search-box"
             name="countryName"
             placeholder="Australia"
-            value={this.state.value}
+            value={this.state.selectedCountry}
             onChange={this.handleInputChange}
           />
           <button
             type="submit"
             className="button-search-box"
-            disabled={this.state.submitting}
-          >
-            {this.state.submitting ? "Loading" : "Search"}
+          >Search
           </button>
         </form>
 
