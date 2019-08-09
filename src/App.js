@@ -14,13 +14,13 @@ class App extends React.Component {
   }
 
   handleInputChange(event) {
-    const countryName = event.target.value;
-    this.setState({ selectedCountry: countryName });
+    const selectedCountry = event.target.value;
+    this.setState({ selectedCountry: selectedCountry });
 
-    if (countryName.length >= 3) {
+    if (selectedCountry.length >= 3) {
       const self = this;
 
-      fetch(`https://restcountries.eu/rest/v2/name/${countryName}`)
+      fetch(`https://restcountries.eu/rest/v2/name/${selectedCountry}`)
         .then(response => response.json())
         .then(countries => {
           const countryNames = countries.map(country => country.name);
