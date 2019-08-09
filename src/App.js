@@ -1,37 +1,56 @@
 import React from "react";
+import Autosuggest from "react-autosuggest";
 import "./App.css";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedCountry: "",
-      countries: []
+      selectedCountry: undefined,
+      countryName: "",
+      countries: [],
+      countryVisible: false
     };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
   }
 
-  handleInputChange(event) {
-    const selectedCountry = event.target.value;
-    this.setState({ selectedCountry: selectedCountry });
-
-    if (selectedCountry.length >= 3) {
-      const self = this;
-
-      fetch(`https://restcountries.eu/rest/v2/name/${selectedCountry}`)
-        .then(response => response.json())
-        .then(countries => { self.setState({ countries });
-        })
-        .catch(() => self.setState({ countries: [] }))
-    }
-  }
-
-  async handleSearch(event) {
+  handleSearch = event => {
     event.preventDefault();
-    this.setState({ result: this.state.selectedCountry });
-  }
+    this.setState({ countryVisible: true });
+  };
+
+  // called every time the input value changes
+  handleInputChange = (event, { newValue }) => {
+    this.setState({
+      countryName: newValue
+    });
+  };
+
+  // Autosuggest will call this function every time you need to update suggestions.
+  // You already implemented this logic above, so just use it.
+  onSuggestionsFetchRequested = ({ value }) => {
+    const self = this;
+
+    if (value.length < 3) {
+      return;
+    }
+
+    fetch(`https://restcountries.eu/rest/v2/name/${value}`)
+      .then(response => response.json())
+      .then(countries => {
+        self.setState({ countries });
+      })
+      .catch(() => self.setState({ countries: [] }));
+  };
+
+  // Autosuggest will call this function every time you need to clear suggestions.
+  onSuggestionsClearRequested = () => {
+    this.setState({ countries: [] });
+  };
+
+  // Will be called every time suggestion is selected via mouse or keyboard.
+  onSuggestionSelected = (event, { suggestion }) => {
+    this.setState({ selectedCountry: suggestion });
+  };
 
   render() {
     return (
@@ -39,25 +58,41 @@ class App extends React.Component {
         <header className="header">
           <h1>Country Information</h1>
         </header>
-        <form className="search-box" onSubmit={this.handleSearch} autoComplete="off">
+        <form
+          className="search-box"
+          onSubmit={this.handleSearch}
+          autoComplete="off"
+        >
           <label className="label-search-box">Country name:</label>
-          <input
-            autoFocus
-            autoComplete="false"
-            type="text"
+          <Autosuggest
             className="input-search-box"
-            name="countryName"
-            placeholder="Australia"
-            value={this.state.selectedCountry}
-            onChange={this.handleInputChange}
+            suggestions={this.state.countries}
+            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+            onSuggestionSelected={this.onSuggestionSelected}
+            getSuggestionValue={suggestion => suggestion.name}
+            renderSuggestion={country => (
+              <div>
+                {country.name} - {country.alpha3Code}
+              </div>
+            )}
+            inputProps={{
+              placeholder: "Type a country name",
+              value: this.state.countryName,
+              onChange: this.handleInputChange
+            }}
           />
-          <button
-            type="submit"
-            className="button-search-box"
-          >Search
+          <button type="submit" className="button-search-box">
+            Search
           </button>
         </form>
-        <ul>{this.state.countries.map(country => (<li key={country.name}>{country.name}</li>))}</ul>
+
+        {this.state.selectedCountry && this.state.countryVisible ? (
+          <div>
+            <img src={this.state.selectedCountry.flag} alt={true} />
+            {this.state.selectedCountry.name}
+          </div>
+        ) : null}
       </div>
     );
   }
