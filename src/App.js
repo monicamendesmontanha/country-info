@@ -1,6 +1,7 @@
 import React from "react";
 import Autosuggest from "react-autosuggest";
 import "./App.css";
+import CountryInformation from "./components/CountryInformation";
 
 class App extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class App extends React.Component {
       .then(response => response.json())
       .then(countries => {
         self.setState({ countries });
-      })
+      });
   };
 
   // Autosuggest will call this function every time needed to clear suggestions.
@@ -57,10 +58,7 @@ class App extends React.Component {
           <h1>Country Information</h1>
         </header>
 
-         <form
-          className="search-box"
-          onSubmit={this.handleSearch}
-        >
+        <form className="search-box" onSubmit={this.handleSearch}>
           <label className="label-search-box">Country name:</label>
           <Autosuggest
             className="input-search-box"
@@ -85,29 +83,9 @@ class App extends React.Component {
           </button>
         </form>
 
-          {this.state.selectedCountry && this.state.countryVisible ? (
-            <div className="country-info">
-              <div className="country-info-flag">
-                <div>
-                  <img src={this.state.selectedCountry.flag} alt="" />
-                </div>
-              </div>
-              <div className="country-info-details">
-                <div><span className="country-info-details-title">Country Name:</span>{this.state.selectedCountry.name}</div>
-                <div><span className="country-info-details-title">
-                  Currency Name: </span> {" "}
-                  {this.state.selectedCountry.currencies.map(currency => (
-                    <span>{currency.name}</span>
-                  ))}
-                </div>
-                <div><span className="country-info-details-title">
-                  Latitude / Longitude:</span> {this.state.selectedCountry.latlng}
-                </div>
-                <div><span className="country-info-details-title">Land Area:</span> {this.state.selectedCountry.area} sq. km</div>
-              </div>
-            </div>
-          ) : null}
-
+        {this.state.selectedCountry && this.state.countryVisible ? (
+          <CountryInformation country={this.state.selectedCountry} />
+        ) : null}
       </div>
     );
   }
