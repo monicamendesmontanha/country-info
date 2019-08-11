@@ -38,7 +38,6 @@ class App extends React.Component {
       .then(countries => {
         self.setState({ countries });
       })
-      .catch(() => self.setState({ countries: [] }));
   };
 
   // Autosuggest will call this function every time needed to clear suggestions.
