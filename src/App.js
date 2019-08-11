@@ -62,7 +62,8 @@ class App extends React.Component {
   // Will be called every time suggestion is selected via mouse or keyboard.
   onSuggestionSelected = (event, { suggestion }) => {
     this.setState({
-      selectedCountry: suggestion
+      selectedCountry: suggestion,
+      countryVisible: true
     });
 
     const searchHistory = this.state.searchHistory;
