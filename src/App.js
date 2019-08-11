@@ -25,8 +25,7 @@ class App extends React.Component {
     });
   };
 
-  // Autosuggest will call this function every time you need to update suggestions.
-  // You already implemented this logic above, so just use it.
+  // Autosuggest will call this function every time needed to update suggestions.
   onSuggestionsFetchRequested = ({ value }) => {
     const self = this;
 
@@ -42,7 +41,7 @@ class App extends React.Component {
       .catch(() => self.setState({ countries: [] }));
   };
 
-  // Autosuggest will call this function every time you need to clear suggestions.
+  // Autosuggest will call this function every time needed to clear suggestions.
   onSuggestionsClearRequested = () => {
     this.setState({ countries: [] });
   };
