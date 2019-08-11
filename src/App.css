@@ -201,10 +201,31 @@
 
 /* mediaMd */
 @media screen and (min-width: 701px) and (max-width: 900px) {
+  .label-search-box {
+    font-size: 30px;
+  }
+  .button-search-box {
+    width: 100px;
+    font-size: 20px;
+  }
+  .country-info-flag img {
+    width: 350px;
+    height: 200px;
+  }
+  .country-info-details {
+    font-size: 18px;
+  }
 }
 
 /* mediaLg */
 @media screen and (min-width: 901px) and (max-width: 1200px) {
+  .country-info-flag img {
+    width: 400px;
+    height: 250px;
+  }
+  .country-info-details {
+    font-size: 22px;
+  }
 }
 
 /* mediaXl */
