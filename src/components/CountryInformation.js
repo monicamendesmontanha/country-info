@@ -16,7 +16,7 @@ const CountryInformation = ({ country }) => {
         <div>
           <span className="country-info-details-title">Currency Name: </span>{" "}
           {country.currencies.map(currency => (
-            <span>{currency.name}</span>
+            <span key={currency.name}>{currency.name}</span>
           ))}
         </div>
         <div>
