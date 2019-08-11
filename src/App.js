@@ -73,9 +73,15 @@ class App extends React.Component {
     if (!searchHistoryNames.includes(suggestion.name)) {
       // add suggestion to the end of the search history
       const searchHistoryWithNewSuggestion = searchHistory.concat(suggestion);
+      const reversedSearchHistory = searchHistoryWithNewSuggestion.reverse();
+
+      localStorage.setItem(
+        "searchHistory",
+        JSON.stringify(reversedSearchHistory)
+      );
 
       this.setState({
-        searchHistory: searchHistoryWithNewSuggestion.reverse()
+        searchHistory: reversedSearchHistory
       });
     }
   };
@@ -84,6 +90,11 @@ class App extends React.Component {
   onSuggestionsClearRequested = () => {
     this.setState({ countries: [] });
   };
+
+  componentDidMount() {
+    const searchHistory = localStorage.getItem("searchHistory") ? JSON.parse(localStorage.getItem("searchHistory")) : [];
+    this.setState({ searchHistory });
+  }
 
   render() {
     return (
