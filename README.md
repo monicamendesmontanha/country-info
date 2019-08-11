@@ -23,6 +23,14 @@ Features:
 
 ---
 
+### Mobile Page
+<img width="196" alt="Screen Shot 2019-08-11 at 21 26 24" src="https://user-images.githubusercontent.com/33978352/62833246-f000db80-bc7e-11e9-9142-311d6bfadf6d.png">
+
+### Dekstop Page
+<img width="1437" alt="Screen Shot 2019-08-11 at 20 41 15" src="https://user-images.githubusercontent.com/33978352/62833252-0313ab80-bc7f-11e9-8d43-12c017824bcc.png">
+
+---
+
 ### Running locally
 
 Requirements:
