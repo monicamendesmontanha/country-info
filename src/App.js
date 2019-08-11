@@ -1,7 +1,7 @@
 import React from "react";
-import Autosuggest from "react-autosuggest";
 import "./App.css";
 import CountryInformation from "./components/CountryInformation";
+import SearchBox from "./components/SearchBox";
 
 class App extends React.Component {
   constructor(props) {
@@ -57,32 +57,15 @@ class App extends React.Component {
         <header className="header">
           <h1>Country Information</h1>
         </header>
-
-        <form className="search-box" onSubmit={this.handleSearch}>
-          <label className="label-search-box">Country name:</label>
-          <Autosuggest
-            className="input-search-box"
-            suggestions={this.state.countries}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            onSuggestionSelected={this.onSuggestionSelected}
-            getSuggestionValue={suggestion => suggestion.name}
-            renderSuggestion={country => (
-              <div>
-                {country.name} - {country.alpha3Code}
-              </div>
-            )}
-            inputProps={{
-              placeholder: "Type a country name",
-              value: this.state.countryName,
-              onChange: this.handleInputChange
-            }}
-          />
-          <button type="submit" className="button-search-box">
-            Search
-          </button>
-        </form>
-
+        <SearchBox
+          handleSearch={this.handleSearch}
+          countries={this.state.countries}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={this.onSuggestionSelected}
+          countryName={this.state.countryName}
+          handleInputChange={this.handleInputChange}
+        />
         {this.state.selectedCountry && this.state.countryVisible ? (
           <CountryInformation country={this.state.selectedCountry} />
         ) : null}
