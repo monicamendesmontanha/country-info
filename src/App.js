@@ -3,6 +3,40 @@ import "./App.css";
 import CountryInformation from "./components/CountryInformation";
 import SearchBox from "./components/SearchBox";
 
+const listOfCountryNames = countries => countries.map(country => country.name);
+
+// remove countries from the search history that doesn't match with the search
+const getSearchHistoryWithMatchingResultsOnly = (
+  typeaheadResponse,
+  searchHistory
+) => {
+  const typeaheadResponseNames = listOfCountryNames(typeaheadResponse);
+
+  const searchHistoryWithMatchingResultsOnly = searchHistory.filter(country => {
+    return typeaheadResponseNames.includes(country.name);
+  });
+
+  return searchHistoryWithMatchingResultsOnly;
+};
+
+// eliminate duplicates from the search history
+const getCountriesThatAreNotInSearchHistory = (
+  typeaheadResponse,
+  searchHistoryWithMatchingResultsOnly
+) => {
+  const searchHistoryNames = listOfCountryNames(
+    searchHistoryWithMatchingResultsOnly
+  );
+
+  const countriesThatAreNotInSearchHistory = typeaheadResponse.filter(
+    country => {
+      return !searchHistoryNames.includes(country.name);
+    }
+  );
+
+  return countriesThatAreNotInSearchHistory;
+};
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +56,7 @@ class App extends React.Component {
   // Autosuggest will call this function every time needed to update suggestions.
   onSuggestionsFetchRequested = ({ value }) => {
     const self = this;
+    const searchHistory = this.state.searchHistory;
 
     if (value.length < 3) {
       return;
@@ -29,49 +64,27 @@ class App extends React.Component {
 
     fetch(`https://restcountries.eu/rest/v2/name/${value}`)
       .then(response => response.json())
-      .then(jsonResponse => {
-        if (jsonResponse.status && jsonResponse.status === 404) {
+      .then(typeaheadResponse => {
+        if (typeaheadResponse.status && typeaheadResponse.status === 404) {
           self.setState({ countries: [] });
         } else {
-          // get top 10
-          const top10 = jsonResponse.slice(0, 9);
-
-          // get search history from the state
-          const searchHistory = this.state.searchHistory;
-
-          // type "can"
-          // history: []
-          // top10: ["Canada", "Central African Republic"]
-          // select: "Canada"
-          // history: ["Canada"]
-
-          // type "bra"
-          // top10: ["Brazil", "Gibraltar"]
-          // history: ["Canada"] - No show!
-          // select: "Brazil"
-          // history: ["Canada", "Brazil"]
-
-
-         const top10Names = top10.map(country => country.name);
-
-         // remove countries from the search history that doesn't match with the search
-         const searchHistoryWithMatchingResultsOnly = searchHistory.filter(country => {
-            return top10Names.includes(country.name);
-         });
-
-          // eliminate duplicates from the search history
-          const searchHistoryNames = searchHistoryWithMatchingResultsOnly.map(item => item.name);
-          const countriesThatAreNotInSearchHistory = top10.filter(country => {
-            return !searchHistoryNames.includes(country.name);
-          });
-
-          // combine search history with the top10
-          const searchResult = searchHistoryWithMatchingResultsOnly.concat(
-            countriesThatAreNotInSearchHistory
+          const searchHistoryWithMatchingResultsOnly = getSearchHistoryWithMatchingResultsOnly(
+            typeaheadResponse,
+            searchHistory
           );
 
+          const countriesThatAreNotInSearchHistory = getCountriesThatAreNotInSearchHistory(
+            typeaheadResponse,
+            searchHistoryWithMatchingResultsOnly
+          );
+
+          // combine search history with the top10
+          const top10 = searchHistoryWithMatchingResultsOnly
+            .concat(countriesThatAreNotInSearchHistory)
+            .slice(0, 9);
+
           // set the state with the search result
-          self.setState({ countries: searchResult });
+          self.setState({ countries: top10 });
         }
       });
   };
@@ -79,7 +92,7 @@ class App extends React.Component {
   // Will be called every time suggestion is selected via mouse or keyboard.
   onSuggestionSelected = (event, { suggestion }) => {
     this.setState({
-      selectedCountry: suggestion,
+      selectedCountry: suggestion
     });
 
     const searchHistory = this.state.searchHistory;
