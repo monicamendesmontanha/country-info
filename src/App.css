@@ -1,3 +1,4 @@
+/* HEADER */
 .header {
   background-color: white;
   min-height: 10vh;
@@ -27,6 +28,7 @@
   flex-direction: row;
   justify-content: center;
   cursor: pointer;
+  margin-bottom: 110px;
 }
 
 .label-search-box {
@@ -108,15 +110,44 @@
 /* COUNTRY INFO */
 
 .country-info {
-  padding-top: 80px;
+  padding: 20px;
   width: 90%;
   margin: 0 auto;
   text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border: 2px solid rgb(153, 82, 82);
+  border-radius: 4px;
+  background-color: burlywood;
 }
 
-.country-flag {
-  width: 200px;
-  height: 80px;
+.country-info-flag {
+  box-sizing: border-box;
+  width: 50%;
+
+}
+
+.country-info-flag img {
+  width: 600px;
+  height: 350px;
+}
+
+.country-info-details {
+  color: white;
+  box-sizing: border-box;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  font-size: 28px;
+  padding-left: 20px;
+}
+
+.country-info-details-title {
+  color: rgb(153, 82, 82);
 }
 
 /* Media Query Mixins */

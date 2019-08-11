@@ -87,16 +87,29 @@ class App extends React.Component {
           </button>
         </form>
 
+          {this.state.selectedCountry && this.state.countryVisible ? (
+            <div className="country-info">
+              <div className="country-info-flag">
+                <div>
+                  <img src={this.state.selectedCountry.flag} alt="" />
+                </div>
+              </div>
+              <div className="country-info-details">
+                <div><span className="country-info-details-title">Country Name:</span>{this.state.selectedCountry.name}</div>
+                <div><span className="country-info-details-title">
+                  Currency Name: </span> {" "}
+                  {this.state.selectedCountry.currencies.map(currency => (
+                    <span>{currency.name}</span>
+                  ))}
+                </div>
+                <div><span className="country-info-details-title">
+                  Latitude / Longitude:</span> {this.state.selectedCountry.latlng}
+                </div>
+                <div><span className="country-info-details-title">Land Area:</span> {this.state.selectedCountry.area}</div>
+              </div>
+            </div>
+          ) : null}
 
-        {this.state.selectedCountry && this.state.countryVisible ? (
-          <div className="country-info">
-            <div><img src={this.state.selectedCountry.flag} alt="" className="country-flag"/></div>
-            <div>Country Name: {this.state.selectedCountry.name}</div>
-            <div>Currency Name: {this.state.selectedCountry.currencies.map(currency => <span>{currency.name}</span>)}</div>
-            <div>Latitude/longitude: {this.state.selectedCountry.latlng}</div>
-            <div>Land area: {this.state.selectedCountry.area}</div>
-          </div>
-        ) : null}
       </div>
     );
   }
