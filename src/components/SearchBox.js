@@ -17,6 +17,10 @@ class SearchBox extends React.Component {
     });
   };
 
+  shouldRenderSuggestions = value => {
+    return value.trim().length >= 3;
+  };
+
   render() {
     const {
       countries,
@@ -35,6 +39,7 @@ class SearchBox extends React.Component {
           onSuggestionsFetchRequested={onSuggestionsFetchRequested}
           onSuggestionsClearRequested={onSuggestionsClearRequested}
           onSuggestionSelected={onSuggestionSelected}
+          shouldRenderSuggestions={this.shouldRenderSuggestions}
           getSuggestionValue={suggestion => suggestion.name}
           renderSuggestion={country => (
             <div>

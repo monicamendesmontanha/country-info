@@ -28,10 +28,6 @@ class App extends React.Component {
     const self = this;
     const searchHistory = this.state.searchHistory;
 
-    if (value.length < 3) {
-      return;
-    }
-
     fetch(`https://restcountries.eu/rest/v2/name/${value}`)
       .then(response => response.json())
       .then(typeaheadResponse => {
