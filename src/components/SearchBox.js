@@ -28,8 +28,13 @@ class SearchBox extends React.Component {
 
     fetch(`https://restcountries.eu/rest/v2/name/${value}`)
       .then(response => response.json())
-      .then(countries => {
-        self.setState({ countries });
+      .then(jsonResponse => {
+        if (jsonResponse.status && jsonResponse.status === 404) {
+          self.setState({ countries: [] });
+        } else {
+          const top10 = jsonResponse.slice(0, 9);
+          self.setState({ countries: top10 });
+        }
       });
   };
 
