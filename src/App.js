@@ -14,7 +14,7 @@ class App extends React.Component {
       selectedCountry: undefined,
       countryVisible: false,
       searchHistory: [],
-      countries: []
+      suggestions: []
     };
   }
 
@@ -28,11 +28,15 @@ class App extends React.Component {
     const self = this;
     const searchHistory = this.state.searchHistory;
 
+    if (value.trim().length < 3) {
+      return;
+    }
+
     fetch(`https://restcountries.eu/rest/v2/name/${value}`)
       .then(response => response.json())
       .then(typeaheadResponse => {
         if (typeaheadResponse.status && typeaheadResponse.status === 404) {
-          self.setState({ countries: [] });
+          self.setState({ suggestions: [] });
         } else {
           const searchHistoryWithMatchingResultsOnly = getSearchHistoryWithMatchingResultsOnly(
             typeaheadResponse,
@@ -50,7 +54,7 @@ class App extends React.Component {
             .slice(0, 9);
 
           // set the state with the search result
-          self.setState({ countries: top10 });
+          self.setState({ suggestions: top10 });
         }
       });
   };
@@ -84,11 +88,22 @@ class App extends React.Component {
 
   // Autosuggest will call this function every time needed to clear suggestions.
   onSuggestionsClearRequested = () => {
-    this.setState({ countries: [] });
+    this.setState({ suggestions: [] });
+  };
+
+  loadSearchHistory = () => {
+    if (this.state.suggestions.length === 0) {
+      const searchHistory = localStorage.getItem("searchHistory")
+        ? JSON.parse(localStorage.getItem("searchHistory"))
+        : [];
+      this.setState({ suggestions: searchHistory });
+    }
   };
 
   componentDidMount() {
-    const searchHistory = localStorage.getItem("searchHistory") ? JSON.parse(localStorage.getItem("searchHistory")) : [];
+    const searchHistory = localStorage.getItem("searchHistory")
+      ? JSON.parse(localStorage.getItem("searchHistory"))
+      : [];
     this.setState({ searchHistory });
   }
 
@@ -99,7 +114,8 @@ class App extends React.Component {
           <h1>Country Information</h1>
         </header>
         <SearchBox
-          countries={this.state.countries}
+          onClick={this.loadSearchHistory}
+          suggestions={this.state.suggestions}
           handleSearch={this.handleSearch}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}

@@ -18,12 +18,13 @@ class SearchBox extends React.Component {
   };
 
   shouldRenderSuggestions = value => {
-    return value.trim().length >= 3;
+    return true;
   };
 
   render() {
     const {
-      countries,
+      onClick,
+      suggestions,
       handleSearch,
       onSuggestionsClearRequested,
       onSuggestionsFetchRequested,
@@ -35,7 +36,7 @@ class SearchBox extends React.Component {
         <label className="label-search-box">Country name:</label>
         <Autosuggest
           className="input-search-box"
-          suggestions={countries}
+          suggestions={suggestions}
           onSuggestionsFetchRequested={onSuggestionsFetchRequested}
           onSuggestionsClearRequested={onSuggestionsClearRequested}
           onSuggestionSelected={onSuggestionSelected}
@@ -49,7 +50,8 @@ class SearchBox extends React.Component {
           inputProps={{
             placeholder: "Type a country name",
             value: this.state.countryName,
-            onChange: this.handleInputChange
+            onChange: this.handleInputChange,
+            onClick: onClick
           }}
         />
         <button type="submit" className="button-search-box">
