@@ -56,10 +56,10 @@ class App extends React.Component {
         <header className="header">
           <h1>Country Information</h1>
         </header>
-        <form
+
+         <form
           className="search-box"
           onSubmit={this.handleSearch}
-          autoComplete="off"
         >
           <label className="label-search-box">Country name:</label>
           <Autosuggest
