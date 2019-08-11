@@ -105,7 +105,7 @@ class App extends React.Component {
                 <div><span className="country-info-details-title">
                   Latitude / Longitude:</span> {this.state.selectedCountry.latlng}
                 </div>
-                <div><span className="country-info-details-title">Land Area:</span> {this.state.selectedCountry.area}</div>
+                <div><span className="country-info-details-title">Land Area:</span> {this.state.selectedCountry.area} sq. km</div>
               </div>
             </div>
           ) : null}
