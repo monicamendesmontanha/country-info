@@ -124,9 +124,9 @@
 }
 
 .country-info-flag {
-  box-sizing: border-box;
   width: 50%;
-
+  display: flex;
+  justify-content: center;
 }
 
 .country-info-flag img {
@@ -154,6 +154,10 @@
 
 /* mediaXSm */
 @media screen and (max-width: 500px) {
+  .country-info-flag img {
+    width: 200px;
+    height: 80px;
+  }
 }
 
 /* mediaSm */
@@ -169,6 +173,29 @@
     margin: 0 auto;
     padding: 6px;
     margin-top: 15px;
+  }
+  .react-autosuggest__input {
+    width: 200px;
+  }
+  .react-autosuggest__suggestions-container--open {
+    width: 240px;
+  }
+
+  .country-info {
+    flex-direction: column;
+  }
+  .country-info-flag {
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .country-info-flag img {
+    width: 280px;
+    height: 150px;
+  }
+  .country-info-details {
+    font-size: 15px;
+    width: 100%;
   }
 }
 
