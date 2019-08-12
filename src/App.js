@@ -2,10 +2,6 @@ import React from "react";
 import "./App.css";
 import CountryInformation from "./components/CountryInformation";
 import SearchBox from "./components/SearchBox";
-import {
-  getSearchHistoryWithMatchingResultsOnly,
-  getCountriesThatAreNotInSearchHistory
-} from "./typeahead";
 
 class App extends React.Component {
   constructor(props) {
@@ -34,27 +30,29 @@ class App extends React.Component {
 
     fetch(`https://restcountries.eu/rest/v2/name/${value}`)
       .then(response => response.json())
-      .then(typeaheadResponse => {
-        if (typeaheadResponse.status && typeaheadResponse.status === 404) {
+      .then(apiResponse => {
+        if (apiResponse.status && apiResponse.status === 404) {
           self.setState({ suggestions: [] });
         } else {
-          const searchHistoryWithMatchingResultsOnly = getSearchHistoryWithMatchingResultsOnly(
-            typeaheadResponse,
-            searchHistory
-          );
+          // filter countries from the search history that matches with the typeahead response
+          const filteredMatchingCountries = searchHistory.filter(country => {
+            return apiResponse.some(item => item.name === country.name);
+          });
 
-          const countriesThatAreNotInSearchHistory = getCountriesThatAreNotInSearchHistory(
-            typeaheadResponse,
-            searchHistoryWithMatchingResultsOnly
-          );
+          // filter countries from the typeahead response doesn't match with the search history (eliminate duplicates)
+          const countryListWithoutDuplicates = apiResponse.filter(country => {
+            return !filteredMatchingCountries.some(
+              item => item.name === country.name
+            );
+          });
 
-          // combine search history with the top10
-          const top10 = searchHistoryWithMatchingResultsOnly
-            .concat(countriesThatAreNotInSearchHistory)
-            .slice(0, 9);
+          // get the top 10 results from the country list
+          const top10 = countryListWithoutDuplicates.slice(0, 10);
+
+          const searchResult = filteredMatchingCountries.concat(top10);
 
           // set the state with the search result
-          self.setState({ suggestions: top10 });
+          self.setState({ suggestions: searchResult });
         }
       });
   };
