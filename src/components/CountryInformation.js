@@ -13,7 +13,7 @@ const CountryInformation = ({ country }) => {
       </div>
       <div className="country-info-details">
         <div>
-          <span className="country-info-details-title">Country Name:</span>
+          <span className="country-info-details-title">Country Name: </span>
           {country.name}
         </div>
         <div>
