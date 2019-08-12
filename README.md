@@ -23,11 +23,25 @@ Features:
 
 ---
 
-### Mobile Page
+## Searching a country
+
 <img width="282" alt="Screen Shot 2019-08-12 at 14 29 31" src="https://user-images.githubusercontent.com/33978352/62845757-fc804500-bd0d-11e9-829d-b0cdc2deea62.png">
 
-### Dekstop Page
-<img width="1432" alt="Screen Shot 2019-08-12 at 14 30 01" src="https://user-images.githubusercontent.com/33978352/62845758-fc804500-bd0d-11e9-8b34-b167494f0f5d.png">
+## Using the typeahead:
+
+The way I implemented the search history was inspired on how Google display the most recent searches by clicking on the input and adding a tiny label indicating the first items that were recently searched.
+
+### Example 1
+
+Display search history on clicking on the input:
+
+<img width="1366" alt="Screen Shot 2019-08-12 at 22 13 03" src="https://user-images.githubusercontent.com/33978352/62864239-818b4e80-bd4e-11e9-8313-30f738782bf6.png">
+
+### Example 2
+
+Searching by "can" should only display "Canada" and the top 10 results that matches with the string "can":
+
+<img width="1374" alt="Screen Shot 2019-08-12 at 22 16 53" src="https://user-images.githubusercontent.com/33978352/62864398-f8c0e280-bd4e-11e9-8223-d406913a1c1a.png">
 
 ---
 
