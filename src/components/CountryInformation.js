@@ -26,7 +26,7 @@ const CountryInformation = ({ country }) => {
           <span className="country-info-details-title">
             Latitude / Longitude:
           </span>{" "}
-          {lat.toFixed(5)}, {long.toFixed(5)}
+          {lat.toFixed(2)}, {long.toFixed(2)}
         </div>
         <div>
           <span className="country-info-details-title">Land Area:</span>{" "}
