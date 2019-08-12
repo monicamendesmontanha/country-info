@@ -1,6 +1,9 @@
 import React from "react";
 
 const CountryInformation = ({ country }) => {
+  const lat = country.latlng[0];
+  const long = country.latlng[1];
+
   return (
     <div className="country-info">
       <div className="country-info-flag">
@@ -14,16 +17,16 @@ const CountryInformation = ({ country }) => {
           {country.name}
         </div>
         <div>
-          <span className="country-info-details-title">Currency Name: </span>{" "}
+          <span className="country-info-details-title">Currency Name: </span> {" "}
           {country.currencies.map(currency => (
-            <span key={currency.name}>{currency.name}</span>
+            <span key={currency.name}> {currency.name}</span>
           ))}
         </div>
         <div>
           <span className="country-info-details-title">
             Latitude / Longitude:
           </span>{" "}
-          {country.latlng}
+          {lat.toFixed(5)}, {long.toFixed(5)}
         </div>
         <div>
           <span className="country-info-details-title">Land Area:</span>{" "}
