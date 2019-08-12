@@ -75,10 +75,7 @@ class App extends React.Component {
       const searchHistoryWithNewSuggestion = searchHistory.concat(suggestion);
       const reversedSearchHistory = searchHistoryWithNewSuggestion.reverse();
 
-      localStorage.setItem(
-        "searchHistory",
-        JSON.stringify(reversedSearchHistory)
-      );
+      this.addSearchHistoryToLocalStorage(reversedSearchHistory);
 
       this.setState({
         searchHistory: reversedSearchHistory
@@ -91,19 +88,25 @@ class App extends React.Component {
     this.setState({ suggestions: [] });
   };
 
+  addSearchHistoryToLocalStorage = searchHistory => {
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+  };
+
+  getSearchHistoryFromLocalStorage = () => {
+    return localStorage.getItem("searchHistory")
+      ? JSON.parse(localStorage.getItem("searchHistory"))
+      : [];
+  };
+
   loadSearchHistory = () => {
     if (this.state.suggestions.length === 0) {
-      const searchHistory = localStorage.getItem("searchHistory")
-        ? JSON.parse(localStorage.getItem("searchHistory"))
-        : [];
+      const searchHistory = this.getSearchHistoryFromLocalStorage();
       this.setState({ suggestions: searchHistory });
     }
   };
 
   componentDidMount() {
-    const searchHistory = localStorage.getItem("searchHistory")
-      ? JSON.parse(localStorage.getItem("searchHistory"))
-      : [];
+    const searchHistory = this.getSearchHistoryFromLocalStorage();
     this.setState({ searchHistory });
   }
 
