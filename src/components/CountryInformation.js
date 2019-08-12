@@ -17,17 +17,19 @@ const CountryInformation = ({ country }) => {
           {country.name}
         </div>
         <div>
-          <span className="country-info-details-title">Currency Name: </span> {" "}
+          <span className="country-info-details-title">Currency Name: </span>{" "}
           {country.currencies.map(currency => (
             <span key={currency.name}> {currency.name}</span>
           ))}
         </div>
-        <div>
-          <span className="country-info-details-title">
-            Latitude / Longitude:
-          </span>{" "}
-          {lat.toFixed(2)}, {long.toFixed(2)}
-        </div>
+        {lat && long ? (
+          <div>
+            <span className="country-info-details-title">
+              Latitude / Longitude:
+            </span>{" "}
+            {lat.toFixed(2)}, {long.toFixed(2)}
+          </div>
+        ) : null}
         <div>
           <span className="country-info-details-title">Land Area:</span>{" "}
           {country.area} sq. km
