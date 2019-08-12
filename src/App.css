@@ -31,6 +31,11 @@
   margin-bottom: 60px;
 }
 
+.search-history {
+  font-style: italic;
+  color: rgb(153, 82, 82);
+}
+
 .label-search-box {
   font-size: 35px;
   color: white;

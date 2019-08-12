@@ -44,7 +44,16 @@ class SearchBox extends React.Component {
           getSuggestionValue={suggestion => suggestion.name}
           renderSuggestion={country => (
             <div>
-              {country.name} - {country.alpha3Code}
+              {country.history ? (
+                <div>
+                  {country.name} - {country.alpha3Code}{" "}
+                  <span className="search-history">(search history)</span>
+                </div>
+              ) : (
+                <div>
+                  {country.name} - {country.alpha3Code}
+                </div>
+              )}
             </div>
           )}
           inputProps={{

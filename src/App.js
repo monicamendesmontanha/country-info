@@ -69,6 +69,9 @@ class App extends React.Component {
 
     // check if suggestion is already included on the search history
     if (!searchHistoryNames.includes(suggestion.name)) {
+      // add identification for the suggestion history
+      suggestion["history"] = true;
+
       // add suggestion to the end of the search history
       const searchHistoryWithNewSuggestion = searchHistory.concat(suggestion);
       const reversedSearchHistory = searchHistoryWithNewSuggestion.reverse();
