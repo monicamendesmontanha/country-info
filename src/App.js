@@ -25,7 +25,6 @@ class App extends React.Component {
 
   // Autosuggest will call this function every time needed to update suggestions.
   onSuggestionsFetchRequested = ({ value }) => {
-    const self = this;
     const searchHistory = this.state.searchHistory;
 
     if (value.trim().length < 3) {
@@ -36,7 +35,7 @@ class App extends React.Component {
       .then(response => response.json())
       .then(typeaheadResponse => {
         if (typeaheadResponse.status !== 200) {
-          self.setState({ suggestions: [] });
+          this.setState({ suggestions: [] });
         } else {
           const searchHistoryWithMatchingResultsOnly = getSearchHistoryWithMatchingResultsOnly(
             typeaheadResponse,
@@ -54,7 +53,7 @@ class App extends React.Component {
             .slice(0, 9);
 
           // set the state with the search result
-          self.setState({ suggestions: top10 });
+          this.setState({ suggestions: top10 });
         }
       });
   };
