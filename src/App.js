@@ -35,7 +35,7 @@ class App extends React.Component {
     fetch(`https://restcountries.eu/rest/v2/name/${value}`)
       .then(response => response.json())
       .then(typeaheadResponse => {
-        if (typeaheadResponse.status && typeaheadResponse.status === 404) {
+        if (typeaheadResponse.status !== 200) {
           self.setState({ suggestions: [] });
         } else {
           const searchHistoryWithMatchingResultsOnly = getSearchHistoryWithMatchingResultsOnly(
