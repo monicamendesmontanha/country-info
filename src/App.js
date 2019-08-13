@@ -47,9 +47,9 @@ class App extends React.Component {
           });
 
           // get the top 10 results from the country list
-          const top10 = countryListWithoutDuplicates.reverse().slice(0, 10);
+          const top10 = countryListWithoutDuplicates.slice(0, 10);
 
-          const searchResult = filteredMatchingCountries.concat(top10);
+          const searchResult = filteredMatchingCountries.reverse().concat(top10);
 
           // set the state with the search result
           self.setState({ suggestions: searchResult });
