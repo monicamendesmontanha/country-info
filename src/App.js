@@ -65,10 +65,9 @@ class App extends React.Component {
     });
 
     const searchHistory = this.state.searchHistory;
-    const searchHistoryNames = searchHistory.map(country => country.name);
 
     // check if suggestion is already included on the search history
-    if (!searchHistoryNames.includes(suggestion.name)) {
+    if (!searchHistory.some(item => item.name === suggestion.name)) {
       // add identification for the suggestion history
       suggestion["history"] = true;
 
