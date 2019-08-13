@@ -49,7 +49,9 @@ class App extends React.Component {
           // get the top 10 results from the country list
           const top10 = countryListWithoutDuplicates.slice(0, 10);
 
-          const searchResult = filteredMatchingCountries.reverse().concat(top10);
+          const searchResult = filteredMatchingCountries
+            .reverse()
+            .concat(top10);
 
           // set the state with the search result
           self.setState({ suggestions: searchResult });
@@ -66,11 +68,20 @@ class App extends React.Component {
 
     const searchHistory = this.state.searchHistory;
 
-    // check if suggestion is already included on the search history
-    if (!searchHistory.some(item => item.name === suggestion.name)) {
-      // add identification for the suggestion history
-      suggestion["history"] = true;
+    // add identification for the suggestion history
+    suggestion["history"] = true;
 
+    // check if suggestion is already included on the search history
+    if (searchHistory.some(item => item.name === suggestion.name)) {
+      // remove the suggestion and re-add the suggestion again, but in the end as it is more recent
+      const searchHistoryWithNewSuggestion = searchHistory
+        .filter(item => item.name !== suggestion.name)
+        .concat(suggestion);
+
+      this.setState({
+        searchHistory: searchHistoryWithNewSuggestion
+      });
+    } else {
       // add suggestion to the end of the search history
       const searchHistoryWithNewSuggestion = searchHistory.concat(suggestion);
 
