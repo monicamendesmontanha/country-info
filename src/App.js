@@ -47,7 +47,7 @@ class App extends React.Component {
           });
 
           // get the top 10 results from the country list
-          const top10 = countryListWithoutDuplicates.slice(0, 10);
+          const top10 = countryListWithoutDuplicates.reverse().slice(0, 10);
 
           const searchResult = filteredMatchingCountries.concat(top10);
 
@@ -73,12 +73,11 @@ class App extends React.Component {
 
       // add suggestion to the end of the search history
       const searchHistoryWithNewSuggestion = searchHistory.concat(suggestion);
-      const reversedSearchHistory = searchHistoryWithNewSuggestion.reverse();
 
-      this.addSearchHistoryToLocalStorage(reversedSearchHistory);
+      this.addSearchHistoryToLocalStorage(searchHistoryWithNewSuggestion);
 
       this.setState({
-        searchHistory: reversedSearchHistory
+        searchHistory: searchHistoryWithNewSuggestion
       });
     }
   };
