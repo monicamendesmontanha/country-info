@@ -1,6 +1,7 @@
 # Country Information
 
 Mobile project using **JS**, **React** and **CSS**.  </br>
+<a href="https://mmm-country-info.herokuapp.com/" target="_blank">Project: "Country Info"</a> </br>
 
 ---
 Features:
