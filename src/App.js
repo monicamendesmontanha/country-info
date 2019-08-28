@@ -38,7 +38,6 @@ class App extends React.Component {
           const filteredMatchingCountries = searchHistory.filter(country => {
             return apiResponse.some(item => item.name === country.name);
           });
-          console.log('filteredMatchingCountries', filteredMatchingCountries)
 
           // filter countries from the typeahead response doesn't match with the search history (eliminate duplicates)
           const countryListWithoutDuplicates = apiResponse.filter(country => {
@@ -46,7 +45,6 @@ class App extends React.Component {
               item => item.name === country.name
             );
           });
-          console.log('countryListWithoutDuplicates', countryListWithoutDuplicates)
 
           // get the top 10 results from the country list
           const top10 = countryListWithoutDuplicates.slice(0, 10);
@@ -69,7 +67,6 @@ class App extends React.Component {
     });
 
     const searchHistory = this.getSearchHistoryFromLocalStorage();
-    console.log('searchHistory', searchHistory)
 
     // add identification field "(search history)" for the suggestion list
     suggestion["history"] = true;
